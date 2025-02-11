@@ -8,7 +8,7 @@ class Node {
   }
 }
 
-class Tree {
+export class Tree {
   constructor() {
     this.root = null
   }
@@ -65,94 +65,93 @@ class Tree {
 
   inOrder(callback) {
     if (typeof callback !== "function") {
-      throw new Error("A callback function is required");
+      throw new Error("A callback function is required")
     }
   
     const traverse = (node) => {
-      if (!node) return;
-      traverse(node.left);    // Left subtree
-      callback(node);         // Visit node
-      traverse(node.right);   // Right subtree
-    };
+      if (!node) return
+      traverse(node.left)
+      callback(node)
+      traverse(node.right)
+    }
   
-    traverse(this.root);
+    traverse(this.root)
   }
   
   preOrder(callback) {
     if (typeof callback !== "function") {
-      throw new Error("A callback function is required");
+      throw new Error("A callback function is required")
     }
   
     const traverse = (node) => {
-      if (!node) return;
-      callback(node);         // Visit node first
-      traverse(node.left);    // Left subtree
-      traverse(node.right);   // Right subtree
-    };
+      if (!node) return
+      callback(node)
+      traverse(node.left)
+      traverse(node.right)
+    }
   
-    traverse(this.root);
+    traverse(this.root)
   }
 
   postOrder(callback) {
     if (typeof callback !== "function") {
-      throw new Error("A callback function is required");
+      throw new Error("A callback function is required")
     }
   
     const traverse = (node) => {
-      if (!node) return;
-      traverse(node.left);    // Left subtree
-      traverse(node.right);   // Right subtree
-      callback(node);         // Visit node last
-    };
+      if (!node) return
+      traverse(node.left)
+      traverse(node.right)
+      callback(node)
+    }
   
-    traverse(this.root);
+    traverse(this.root)
   }  
 
   height(node) {
-    if (!node) return -1; // Base case: height of null is -1
+    if (!node) return -1
   
-    let leftHeight = this.height(node.left);  // Get left subtree height
-    let rightHeight = this.height(node.right); // Get right subtree height
+    let leftHeight = this.height(node.left)
+    let rightHeight = this.height(node.right)
   
-    return Math.max(leftHeight, rightHeight) + 1; // Max of both + 1 for current node
+    return Math.max(leftHeight, rightHeight) + 1
   }
   
   depth(node, current = this.root, depthCount = 0) {
-    if (!node || !current) return -1; // If node or tree is empty, return -1
+    if (!node || !current) return -1
   
-    if (current === node) return depthCount; // Found the node, return depth
+    if (current === node) return depthCount
   
     if (node.data < current.data) {
-      return this.depth(node, current.left, depthCount + 1); // Go left
+      return this.depth(node, current.left, depthCount + 1)
     } else if (node.data > current.data) {
-      return this.depth(node, current.right, depthCount + 1); // Go right
+      return this.depth(node, current.right, depthCount + 1)
     }
   
-    return -1; // Node not found in the tree
+    return -1
   }
 
   isBalanced(node = this.root) {
-    if (!node) return true; // An empty tree is balanced
+    if (!node) return true
   
-    let leftHeight = this.height(node.left);
-    let rightHeight = this.height(node.right);
+    let leftHeight = this.height(node.left)
+    let rightHeight = this.height(node.right)
   
-    let balanceFactor = Math.abs(leftHeight - rightHeight);
+    let balanceFactor = Math.abs(leftHeight - rightHeight)
   
-    if (balanceFactor > 1) return false; // Unbalanced tree
+    if (balanceFactor > 1) return false
   
-    return this.isBalanced(node.left) && this.isBalanced(node.right); // Check recursively
+    return this.isBalanced(node.left) && this.isBalanced(node.right)
   }
 
   rebalance() {
-    if (this.isBalanced()) return; // No need to rebalance if already balanced
+    if (this.isBalanced()) return
   
-    let values = [];
-    this.inOrder(node => values.push(node.data)); // Get sorted values from in-order traversal
+    let values = []
+    this.inOrder(node => values.push(node.data))
   
-    this.root = this.buildTree(values); // Rebuild tree from sorted values
+    this.root = this.buildTree(values)
   }
-  
 
   #buildTreeFunction(array, start, end) {
     if (start > end) return null
@@ -208,6 +207,11 @@ class Tree {
   }
 }
 
-// let arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
-// let test = new Tree()
-// console.log(test.buildTree(arr))
+export const generateArray = function (length, max) {
+  let arr = []
+  for (let i = 0; i < length; i++) {
+    let a = Math.floor(Math.random() * max)
+    arr.push(a)
+  }
+  return arr
+}
